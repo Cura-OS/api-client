@@ -31,7 +31,6 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
-      "require": "./dist/index.js",
       "default": "./dist/index.js"
     }
   },
@@ -51,13 +50,15 @@
     "registry": "http://localhost:4873"
   },
   "scripts": {
-    "build": "bunx tsc",
+    "build": "bun run build:js && bun run build:types",
+    "build:js": "bun build ./src/index.ts --outdir ./dist --target browser --format esm --external react --external react-dom --external react/jsx-runtime --external @tanstack/react-query --external @apollo/client --external graphql",
+    "build:types": "tsc -p tsconfig.build.json",
     "ci": "bun run lint && bun run typecheck && bun run test && bun run build",
     "lint": "oxlint .",
     "test": "bun test --pass-with-no-tests",
     "test:coverage": "bun test --coverage --pass-with-no-tests",
     "typecheck": "tsc --noEmit"
   },
-  "type": "commonjs",
+  "type": "module",
   "types": "./dist/index.d.ts"
 }
