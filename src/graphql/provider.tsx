@@ -1,3 +1,4 @@
+'use client';
 /**
  * React provider for the CuraOS GraphQL data plane.
  *
@@ -5,6 +6,8 @@
  * and builds a default client pointed at the Cosmo Router supergraph endpoint
  * when one is not supplied. Mount once near the app root, typically alongside
  * `CuraQueryProvider` for the REST plane.
+ * "use client": uses useState, so Next must treat it as a client component
+ * even when reached via the package barrel from a server graph.
  */
 import { ApolloProvider } from '@apollo/client/react';
 import { useState, type ReactNode } from 'react';

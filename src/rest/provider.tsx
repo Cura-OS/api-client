@@ -1,9 +1,12 @@
+'use client';
 /**
  * React provider that wires the shared TanStack Query client and configures the
  * per-service REST clients (base URL + auth token) on mount.
  *
  * Mount once near the app root. Works in React 19 on web (Next) and React
  * Native (Expo) since it only depends on `@tanstack/react-query` + `react`.
+ * "use client": uses useState/useMemo, so Next must treat it as a client
+ * component even when reached via the package barrel from a server graph.
  */
 import { QueryClientProvider, type QueryClient } from '@tanstack/react-query';
 import { useMemo, useState, type ReactNode } from 'react';
