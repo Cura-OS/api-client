@@ -5,6 +5,11 @@
     "emitDeclarationOnly": true,
     "declaration": true,
     "declarationMap": true,
+    // Always full-emit: incremental tsbuildinfo intermittently skipped emitting
+    // some .d.ts (e.g. config.d.ts) after a `bun build` cleared dist, leaving
+    // consumers with an unresolved ApiClientConfigInput. A clean emit every run
+    // is cheap for this small package and removes the flake.
+    "incremental": false,
     "outDir": "./dist"
   },
   "include": ["src"],
