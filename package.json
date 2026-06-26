@@ -51,7 +51,7 @@
   },
   "scripts": {
     "build": "bun run build:js && bun run build:types",
-    "build:js": "bun build ./src/index.ts --outdir ./dist --target browser --format esm --production --banner='\"use client\";' --external react --external react-dom --external react/jsx-runtime --external @tanstack/react-query --external @apollo/client --external graphql",
+    "build:js": "bun build ./src/index.ts --outdir ./dist --target browser --format esm --packages external --production --banner='\"use client\";' --external react --external react-dom --external react/jsx-runtime --external @tanstack/react-query --external @apollo/client --external graphql",
     "build:types": "tsc -p tsconfig.build.json",
     "ci": "bun run lint && bun run typecheck && bun run test && bun run build",
     "lint": "oxlint .",
