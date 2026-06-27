@@ -59,90 +59,174 @@ function op<TFn extends HeyApiOperation>(
 
 export const calendarHooks = {
   useHealth: createQueryHook('calendar', 'calendarsHealth', op(calendarSdk.calendarsHealth)),
-  useProtectedProbe: createQueryHook('calendar', 'calendarsProtectedProbe', op(calendarSdk.calendarsProtectedProbe)),
+  useProtectedProbe: createQueryHook(
+    'calendar',
+    'calendarsProtectedProbe',
+    op(calendarSdk.calendarsProtectedProbe),
+  ),
   useRead: createQueryHook('calendar', 'calendarsRead', op(calendarSdk.calendarsRead)),
   useProtectedWrite: createMutationHook(op(calendarSdk.calendarsProtectedWrite)),
 } as const;
 
 export const clinicalDocHooks = {
-  useHealth: createQueryHook('clinicalDoc', 'clinicalDocsHealth', op(clinicalDocSdk.clinicalDocsHealth)),
-  useProtectedProbe: createQueryHook('clinicalDoc', 'clinicalDocsProtectedProbe', op(clinicalDocSdk.clinicalDocsProtectedProbe)),
-  useWhoami: createQueryHook('clinicalDoc', 'clinicalDocsWhoami', op(clinicalDocSdk.clinicalDocsWhoami)),
+  useHealth: createQueryHook(
+    'clinicalDoc',
+    'clinicalDocsHealth',
+    op(clinicalDocSdk.clinicalDocsHealth),
+  ),
+  useProtectedProbe: createQueryHook(
+    'clinicalDoc',
+    'clinicalDocsProtectedProbe',
+    op(clinicalDocSdk.clinicalDocsProtectedProbe),
+  ),
+  useWhoami: createQueryHook(
+    'clinicalDoc',
+    'clinicalDocsWhoami',
+    op(clinicalDocSdk.clinicalDocsWhoami),
+  ),
   useProtectedWrite: createMutationHook(op(clinicalDocSdk.clinicalDocsProtectedWrite)),
 } as const;
 
 export const encounterHooks = {
   useHealth: createQueryHook('encounter', 'encountersHealth', op(encounterSdk.encountersHealth)),
-  useProtectedProbe: createQueryHook('encounter', 'encountersProtectedProbe', op(encounterSdk.encountersProtectedProbe)),
+  useProtectedProbe: createQueryHook(
+    'encounter',
+    'encountersProtectedProbe',
+    op(encounterSdk.encountersProtectedProbe),
+  ),
   useWhoami: createQueryHook('encounter', 'encountersWhoami', op(encounterSdk.encountersWhoami)),
   useProtectedWrite: createMutationHook(op(encounterSdk.encountersProtectedWrite)),
 } as const;
 
 export const notifyHooks = {
   useHealth: createQueryHook('notify', 'notifysHealth', op(notifySdk.notifysHealth)),
-  useProtectedProbe: createQueryHook('notify', 'notifysProtectedProbe', op(notifySdk.notifysProtectedProbe)),
+  useProtectedProbe: createQueryHook(
+    'notify',
+    'notifysProtectedProbe',
+    op(notifySdk.notifysProtectedProbe),
+  ),
   useRead: createQueryHook('notify', 'notifysRead', op(notifySdk.notifysRead)),
   useProtectedWrite: createMutationHook(op(notifySdk.notifysProtectedWrite)),
 } as const;
 
 export const ordersHooks = {
   useHealth: createQueryHook('orders', 'ordersHealth', op(ordersSdk.ordersHealth)),
-  useProtectedProbe: createQueryHook('orders', 'ordersProtectedProbe', op(ordersSdk.ordersProtectedProbe)),
+  useProtectedProbe: createQueryHook(
+    'orders',
+    'ordersProtectedProbe',
+    op(ordersSdk.ordersProtectedProbe),
+  ),
   useWhoami: createQueryHook('orders', 'ordersWhoami', op(ordersSdk.ordersWhoami)),
   useProtectedWrite: createMutationHook(op(ordersSdk.ordersProtectedWrite)),
 } as const;
 
 export const reportsHooks = {
   useHealth: createQueryHook('reports', 'reportsHealth', op(reportsSdk.reportsHealth)),
-  useProtectedProbe: createQueryHook('reports', 'reportsProtectedProbe', op(reportsSdk.reportsProtectedProbe)),
+  useProtectedProbe: createQueryHook(
+    'reports',
+    'reportsProtectedProbe',
+    op(reportsSdk.reportsProtectedProbe),
+  ),
   useRead: createQueryHook('reports', 'reportsRead', op(reportsSdk.reportsRead)),
   useProtectedWrite: createMutationHook(op(reportsSdk.reportsProtectedWrite)),
 } as const;
 
 export const schedulingHooks = {
-  useHealth: createQueryHook('scheduling', 'schedulingsHealth', op(schedulingSdk.schedulingsHealth)),
-  useProtectedProbe: createQueryHook('scheduling', 'schedulingsProtectedProbe', op(schedulingSdk.schedulingsProtectedProbe)),
-  useWhoami: createQueryHook('scheduling', 'schedulingsWhoami', op(schedulingSdk.schedulingsWhoami)),
+  useHealth: createQueryHook(
+    'scheduling',
+    'schedulingsHealth',
+    op(schedulingSdk.schedulingsHealth),
+  ),
+  useProtectedProbe: createQueryHook(
+    'scheduling',
+    'schedulingsProtectedProbe',
+    op(schedulingSdk.schedulingsProtectedProbe),
+  ),
+  useWhoami: createQueryHook(
+    'scheduling',
+    'schedulingsWhoami',
+    op(schedulingSdk.schedulingsWhoami),
+  ),
   useProtectedWrite: createMutationHook(op(schedulingSdk.schedulingsProtectedWrite)),
 } as const;
 
 export const searchHooks = {
   useHealth: createQueryHook('search', 'searchsHealth', op(searchSdk.searchsHealth)),
-  useProtectedProbe: createQueryHook('search', 'searchsProtectedProbe', op(searchSdk.searchsProtectedProbe)),
+  useProtectedProbe: createQueryHook(
+    'search',
+    'searchsProtectedProbe',
+    op(searchSdk.searchsProtectedProbe),
+  ),
   useRead: createQueryHook('search', 'searchsRead', op(searchSdk.searchsRead)),
   useProtectedWrite: createMutationHook(op(searchSdk.searchsProtectedWrite)),
 } as const;
 
 export const settingsHooks = {
   useHealth: createQueryHook('settings', 'settingsHealth', op(settingsSdk.settingsHealth)),
-  useProtectedProbe: createQueryHook('settings', 'settingsProtectedProbe', op(settingsSdk.settingsProtectedProbe)),
+  useProtectedProbe: createQueryHook(
+    'settings',
+    'settingsProtectedProbe',
+    op(settingsSdk.settingsProtectedProbe),
+  ),
   useRead: createQueryHook('settings', 'settingsRead', op(settingsSdk.settingsRead)),
   useProtectedWrite: createMutationHook(op(settingsSdk.settingsProtectedWrite)),
 } as const;
 
 export const storageHooks = {
   useHealth: createQueryHook('storage', 'storagesHealth', op(storageSdk.storagesHealth)),
-  useProtectedProbe: createQueryHook('storage', 'storagesProtectedProbe', op(storageSdk.storagesProtectedProbe)),
+  useProtectedProbe: createQueryHook(
+    'storage',
+    'storagesProtectedProbe',
+    op(storageSdk.storagesProtectedProbe),
+  ),
   useRead: createQueryHook('storage', 'storagesRead', op(storageSdk.storagesRead)),
   useProtectedWrite: createMutationHook(op(storageSdk.storagesProtectedWrite)),
 } as const;
 
 export const tasksHooks = {
   useHealth: createQueryHook('tasks', 'tasksHealth', op(tasksSdk.tasksHealth)),
-  useProtectedProbe: createQueryHook('tasks', 'tasksProtectedProbe', op(tasksSdk.tasksProtectedProbe)),
+  useProtectedProbe: createQueryHook(
+    'tasks',
+    'tasksProtectedProbe',
+    op(tasksSdk.tasksProtectedProbe),
+  ),
   useRead: createQueryHook('tasks', 'tasksRead', op(tasksSdk.tasksRead)),
   useProtectedWrite: createMutationHook(op(tasksSdk.tasksProtectedWrite)),
 } as const;
 
 export const terminologyHooks = {
-  useHealth: createQueryHook('terminology', 'terminologiesHealth', op(terminologySdk.terminologiesHealth)),
-  useProtectedProbe: createQueryHook('terminology', 'terminologiesProtectedProbe', op(terminologySdk.terminologiesProtectedProbe)),
-  useWhoami: createQueryHook('terminology', 'terminologiesWhoami', op(terminologySdk.terminologiesWhoami)),
+  useHealth: createQueryHook(
+    'terminology',
+    'terminologiesHealth',
+    op(terminologySdk.terminologiesHealth),
+  ),
+  useProtectedProbe: createQueryHook(
+    'terminology',
+    'terminologiesProtectedProbe',
+    op(terminologySdk.terminologiesProtectedProbe),
+  ),
+  useWhoami: createQueryHook(
+    'terminology',
+    'terminologiesWhoami',
+    op(terminologySdk.terminologiesWhoami),
+  ),
   useProtectedWrite: createMutationHook(op(terminologySdk.terminologiesProtectedWrite)),
   // Service-specific FHIR terminology operations.
-  useExpand: createQueryHook('terminology', 'fhirTerminologyExpand', op(terminologySdk.fhirTerminologyExpand)),
-  useLookup: createQueryHook('terminology', 'fhirTerminologyLookup', op(terminologySdk.fhirTerminologyLookup)),
-  useValidateCode: createQueryHook('terminology', 'fhirTerminologyValidateCode', op(terminologySdk.fhirTerminologyValidateCode)),
+  useExpand: createQueryHook(
+    'terminology',
+    'fhirTerminologyExpand',
+    op(terminologySdk.fhirTerminologyExpand),
+  ),
+  useLookup: createQueryHook(
+    'terminology',
+    'fhirTerminologyLookup',
+    op(terminologySdk.fhirTerminologyLookup),
+  ),
+  useValidateCode: createQueryHook(
+    'terminology',
+    'fhirTerminologyValidateCode',
+    op(terminologySdk.fhirTerminologyValidateCode),
+  ),
   useTranslate: createMutationHook(op(terminologySdk.fhirTerminologyTranslate)),
   useAssistSuggest: createMutationHook(op(terminologySdk.terminologyAssistSuggest)),
 } as const;

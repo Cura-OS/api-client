@@ -118,4 +118,8 @@ export {
 
 // Re-export the Apollo primitives consumers most often need.
 export { ApolloClient, InMemoryCache, HttpLink, gql, type TypedDocumentNode } from '@apollo/client';
-export { ApolloProvider, useQuery as useGraphQLQuery, useMutation as useGraphQLMutation } from '@apollo/client/react';
+export {
+  ApolloProvider,
+  useQuery as useGraphQLQuery,
+  useMutation as useGraphQLMutation,
+} from '@apollo/client/react';
