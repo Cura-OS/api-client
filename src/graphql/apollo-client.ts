@@ -38,9 +38,7 @@ export interface CreateGraphQLClientOptions extends ApiClientConfigInput {
  * which Apollo evaluates per request, so a refreshed token flows through
  * without re-instantiating the client.
  */
-export function createCuraGraphQLClient(
-  options: CreateGraphQLClientOptions = {},
-): ApolloClient {
+export function createCuraGraphQLClient(options: CreateGraphQLClientOptions = {}): ApolloClient {
   const { graphqlUrl } = resolveApiClientConfig(options);
   const { getAuthToken, headers } = options;
 

@@ -31,6 +31,8 @@ export const defaultQueryClientConfig: QueryClientConfig = {
  * Creates the app-wide `QueryClient`. Pass `config` to override the CuraOS
  * defaults (deep-merged by the caller, not here, to keep this predictable).
  */
-export function createCuraQueryClient(config: QueryClientConfig = defaultQueryClientConfig): QueryClient {
+export function createCuraQueryClient(
+  config: QueryClientConfig = defaultQueryClientConfig,
+): QueryClient {
   return new QueryClient(config);
 }
