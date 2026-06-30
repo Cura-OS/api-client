@@ -127,7 +127,7 @@ export const reportsHooks = {
     'reportsProtectedProbe',
     op(reportsSdk.reportsProtectedProbe),
   ),
-  useRead: createQueryHook('reports', 'reportsRead', op(reportsSdk.reportsRead)),
+  useRead: createQueryHook('reports', 'reportsListCatalogue', op(reportsSdk.reportsListCatalogue)),
   useProtectedWrite: createMutationHook(op(reportsSdk.reportsProtectedWrite)),
 } as const;
 
