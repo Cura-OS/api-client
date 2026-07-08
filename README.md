@@ -1,54 +1,71 @@
-# @curaos/api-client
+# api-client _(@curaos/api-client)_
 
-Unified frontend data-access layer for CuraOS. Two data planes:
+[![License: Proprietary](https://img.shields.io/badge/license-Proprietary-red)](./LICENSE)
+[![Exposure: Closed](https://img.shields.io/badge/exposure-Closed-red)](#license)
+[![Module: Package](https://img.shields.io/badge/module-Package-informational)](#background)
 
-- **REST (primary)** - TanStack Query hooks over the per-service typed SDKs
-  (`@curaos/<service>-sdk`) generated from each service's TypeSpec contract
-  (ADR-0103). One shared `QueryClient`, one-call base-URL + auth-token wiring
-  for every SDK client, and generic factories that turn any generated operation
-  into a typed hook.
-- **GraphQL (secondary)** - an Apollo Client wired to the WunderGraph Cosmo
-  Router federated supergraph endpoint (ADR-0103 section 5.2 / ADR-0163),
-  configurable via `CURAOS_GRAPHQL_URL`. Ships the client + `TypedDocumentNode`
-  plumbing + a smoke query; the federated schema is a later phase.
+CuraOS unified frontend data-access layer: TanStack Query hooks over the per-service typed REST SDKs (ADR-0103) plus an Apollo Client for the Cosmo Router federated GraphQL supergraph (ADR-0163). React 19.
 
-React 19. Works on web (Next) and React Native (Expo) per ADR-0106.
+Part of the CuraOS (Care Oriented Stack) platform. CuraOS unified frontend data-access layer: TanStack Query hooks over the per-service typed REST SDKs (ADR-0103) plus an Apollo Client for the Cosmo Router federated GraphQL supergraph (ADR-0163). React 19. Domain: neutral.
 
-Agent docs (CONTEXT + Requirements) live at
-`ai/curaos/frontend/packages/api-client/`.
+## Table of Contents
 
-## Quick start
+- [Background](#background)
+- [Install](#install)
+- [Usage](#usage)
+- [API](#api)
+- [Security](#security)
+- [Maintainers](#maintainers)
+- [Contributing](#contributing)
+- [License](#license)
 
-```tsx
-import {
-  CuraQueryProvider,
-  CuraGraphQLProvider,
-  calendarHooks,
-} from '@curaos/api-client';
+## Background
 
-function Root({ children }: { children: React.ReactNode }) {
-  return (
-    <CuraQueryProvider
-      restBaseUrl={process.env.CURAOS_API_BASE_URL}
-      getAuthToken={() => session.accessToken}
-    >
-      <CuraGraphQLProvider graphqlUrl={process.env.CURAOS_GRAPHQL_URL}>
-        {children}
-      </CuraGraphQLProvider>
-    </CuraQueryProvider>
-  );
-}
+CuraOS unified frontend data-access layer: TanStack Query hooks over the per-service typed REST SDKs (ADR-0103) plus an Apollo Client for the Cosmo Router federated GraphQL supergraph (ADR-0163). React 19.. This module is part of the CuraOS neutral domain, plain layer.
 
-function CalendarHealth() {
-  const { data, isLoading } = calendarHooks.useHealth({});
-  return isLoading ? <span>...</span> : <span>{data?.status}</span>;
-}
-```
+<!-- curaos:keep -->
+<!-- Add module-specific background, architecture notes, and design decisions here.
+     This section survives re-emit (keep-fence protected). -->
+<!-- /curaos:keep -->
 
-## Build
+## Install
 
 ```bash
-bun install
-bun run build
-bun run typecheck
+bun add @curaos/api-client
 ```
+
+## Usage
+
+See [docs.curaos.abualruz.com](https://docs.curaos.abualruz.com) (interim).
+
+<!-- curaos:keep -->
+<!-- Add usage examples, code snippets, and integration patterns here.
+     This section survives re-emit (keep-fence protected). -->
+<!-- /curaos:keep -->
+
+## API
+
+See [API reference](./src/index.ts) or generated TypeDoc.
+
+<!-- curaos:keep -->
+<!-- Add API examples, request/response samples, and event payloads here.
+     This section survives re-emit (keep-fence protected). -->
+<!-- /curaos:keep -->
+
+## Security
+
+See [SECURITY.md](./SECURITY.md) for vulnerability reporting policy.
+
+## Maintainers
+
+- CuraOS Team - [GitHub](https://github.com/Cura-OS)
+
+## Contributing
+
+Contributions are handled through the repository maintainers. Public contribution guidelines are emitted for open and source-available repositories.
+
+By contributing, you agree that your contributions will be licensed under the same license as this project.
+
+## License
+
+LicenseRef-CuraOS-Proprietary - CuraOS (Care Oriented Stack). See [LICENSE](./LICENSE) for details.
