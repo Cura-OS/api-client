@@ -5,6 +5,7 @@ import {
   DEFAULT_REST_BASE_URL,
   createCuraGraphQLClient,
   createCuraQueryClient,
+  createRestClient,
   configureRestClients,
   resolveApiClientConfig,
   serviceClients,
@@ -59,6 +60,33 @@ describe('REST data plane', () => {
     for (const client of Object.values(serviceClients)) {
       expect(client.getConfig().baseUrl).toBe('https://gw.example/api/v1');
     }
+  });
+
+  test('createRestClient gives request-scoped clients that never cross-send auth', async () => {
+    // Two concurrent "requests" for different users. Each owns its client +
+    // token source, so user A's bearer must not leak into user B's client even
+    // though both are configured against the same base URL.
+    const clientA = createRestClient({
+      restBaseUrl: 'https://gw.example/api/v1',
+      getAuthToken: () => 'token-A',
+    });
+    const clientB = createRestClient({
+      restBaseUrl: 'https://gw.example/api/v1',
+      getAuthToken: () => 'token-B',
+    });
+
+    expect(clientA).not.toBe(clientB);
+    expect(clientA).not.toBe(serviceClients.calendar);
+
+    const authA = clientA.getConfig().auth as () => string | Promise<string>;
+    const authB = clientB.getConfig().auth as () => string | Promise<string>;
+    expect(await authA()).toBe('token-A');
+    expect(await authB()).toBe('token-B');
+
+    // Reconfiguring one request's client leaves the other untouched (no shared
+    // singleton clobber), which is exactly what the mutated global cannot do.
+    clientB.setConfig({ auth: () => 'token-B-rotated' });
+    expect(await authA()).toBe('token-A');
   });
 });
 

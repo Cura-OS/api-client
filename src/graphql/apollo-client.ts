@@ -12,7 +12,8 @@
  * come from the `@apollo/client` root; React bindings live under
  * `@apollo/client/react`.
  */
-import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
+import { ApolloClient, ApolloLink, HttpLink, InMemoryCache } from '@apollo/client';
+import { SetContextLink } from '@apollo/client/link/context';
 
 import { resolveApiClientConfig, type ApiClientConfigInput } from '../config';
 
@@ -20,13 +21,15 @@ import { resolveApiClientConfig, type ApiClientConfigInput } from '../config';
 export interface CreateGraphQLClientOptions extends ApiClientConfigInput {
   /**
    * Returns a bearer token for the `Authorization` header, or `undefined` when
-   * unauthenticated. Resolved per-operation so token rotation is picked up
-   * without rebuilding the client. Wire to `@curaos/auth-sdk` when available.
+   * unauthenticated. May be sync or async. Resolved per-operation so token
+   * rotation, login, and logout are picked up without rebuilding the client.
+   * Wire to `@curaos/auth-sdk` when available.
    */
-  readonly getAuthToken?: () => string | undefined;
+  readonly getAuthToken?: () => string | undefined | Promise<string | undefined>;
   /**
-   * Extra static headers sent with every GraphQL request (for example a tenant
-   * header `X-CURA-TENANT` per ADR-0103 section 8).
+   * Extra headers sent with every GraphQL request (for example a tenant header
+   * `X-CURA-TENANT` per ADR-0103 section 8). Read per-operation, so passing a
+   * fresh object rebinds the tenant without rebuilding the client.
    */
   readonly headers?: Record<string, string>;
 }
@@ -34,29 +37,31 @@ export interface CreateGraphQLClientOptions extends ApiClientConfigInput {
 /**
  * Creates the Apollo Client pointed at the Cosmo Router supergraph endpoint.
  *
- * Auth + tenant headers are injected via the `HttpLink` `headers` callback,
- * which Apollo evaluates per request, so a refreshed token flows through
- * without re-instantiating the client.
+ * Auth + tenant headers are resolved PER OPERATION by a `SetContextLink`
+ * chained before the terminating `HttpLink`: the setter calls `getAuthToken()`
+ * (sync or async) and reads `headers` at request time, so a refreshed token, a
+ * login, or a logout on the same client instance is reflected on the next
+ * request. No user's bearer or tenant is ever baked into the client.
  */
 export function createCuraGraphQLClient(options: CreateGraphQLClientOptions = {}): ApolloClient {
   const { graphqlUrl } = resolveApiClientConfig(options);
   const { getAuthToken, headers } = options;
 
-  const requestHeaders: Record<string, string> = { ...headers };
-  if (getAuthToken) {
-    const token = getAuthToken();
-    if (token) {
-      requestHeaders.Authorization = `Bearer ${token}`;
-    }
-  }
-
-  const httpLink = new HttpLink({
-    uri: graphqlUrl,
-    headers: requestHeaders,
+  const authLink = new SetContextLink(async (prevContext) => {
+    const token = getAuthToken ? await getAuthToken() : undefined;
+    return {
+      headers: {
+        ...headers,
+        ...(prevContext.headers as Record<string, string> | undefined),
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+    };
   });
 
+  const httpLink = new HttpLink({ uri: graphqlUrl });
+
   return new ApolloClient({
-    link: httpLink,
+    link: ApolloLink.from([authLink, httpLink]),
     cache: new InMemoryCache(),
     // Apollo 4 client-awareness: name + version travel as
     // `apollographql-client-*` headers, which Cosmo / Apollo Studio use to

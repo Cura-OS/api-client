@@ -40,6 +40,7 @@ export {
 
 export {
   configureRestClients,
+  createRestClient,
   serviceClients,
   type ServiceName,
   type AuthTokenProvider,

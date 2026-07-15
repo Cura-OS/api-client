@@ -10,7 +10,7 @@
  * even when reached via the package barrel from a server graph.
  */
 import { ApolloProvider } from '@apollo/client/react';
-import { useState, type ReactNode } from 'react';
+import { useMemo, type ReactNode } from 'react';
 
 import { createCuraGraphQLClient, type CreateGraphQLClientOptions } from './apollo-client';
 import type { ApolloClient } from '@apollo/client';
@@ -26,19 +26,25 @@ export interface CuraGraphQLProviderProps extends CreateGraphQLClientOptions {
 }
 
 /**
- * Provides the Apollo Client for the federated supergraph to its subtree. The
- * client is created once for the provider's lifetime unless one is supplied.
+ * Provides the Apollo Client for the federated supergraph to its subtree.
+ *
+ * Auth + tenant are resolved per operation by the client's `SetContextLink`, so
+ * a token refresh needs no rebuild. The fallback client is rebuilt only when
+ * the endpoint, token source, or tenant headers change identity, so a swapped
+ * `getAuthToken` closure or tenant object never leaves a stale client wired up.
  */
 export function CuraGraphQLProvider(props: CuraGraphQLProviderProps): ReactNode {
   const { client, children, restBaseUrl, graphqlUrl, getAuthToken, headers } = props;
 
-  const [fallbackClient] = useState(() =>
-    createCuraGraphQLClient({
-      ...(restBaseUrl !== undefined ? { restBaseUrl } : {}),
-      ...(graphqlUrl !== undefined ? { graphqlUrl } : {}),
-      ...(getAuthToken !== undefined ? { getAuthToken } : {}),
-      ...(headers !== undefined ? { headers } : {}),
-    }),
+  const fallbackClient = useMemo(
+    () =>
+      createCuraGraphQLClient({
+        ...(restBaseUrl !== undefined ? { restBaseUrl } : {}),
+        ...(graphqlUrl !== undefined ? { graphqlUrl } : {}),
+        ...(getAuthToken !== undefined ? { getAuthToken } : {}),
+        ...(headers !== undefined ? { headers } : {}),
+      }),
+    [restBaseUrl, graphqlUrl, getAuthToken, headers],
   );
 
   return <ApolloProvider client={client ?? fallbackClient}>{children}</ApolloProvider>;
