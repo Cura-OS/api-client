@@ -1,9 +1,0 @@
-name: Add to CuraOS Roadmap
-on:
-  workflow_dispatch: {}
-# Auto triggers disabled per M1 user directive. Re-enable per-workflow on explicit approval.
-
-jobs:
-  add:
-    uses: Cura-Care-Oriented-Stack/.github/.github/workflows/add-to-project.yml@main
-    secrets: inherit
