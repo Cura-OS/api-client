@@ -124,3 +124,6 @@ export {
   useQuery as useGraphQLQuery,
   useMutation as useGraphQLMutation,
 } from '@apollo/client/react';
+
+// gate probe: reverted in the next commit, see PR body.
+export const gateProbe: number = 'not a number';
