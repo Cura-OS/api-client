@@ -13,6 +13,9 @@ jobs:
   ci:
     if: github.event.pull_request.draft == false
     runs-on: self-hosted
+    defaults:
+      run:
+        shell: bash
     steps:
       - name: Checkout CuraOS parent workspace
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
