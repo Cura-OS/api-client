@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   ci:
-    runs-on: [ self-hosted, linux, x64 ]
+    runs-on: [ self-hosted, linux, x64, curaos-heavy ]
     timeout-minutes: 30
     defaults:
       run:
@@ -29,7 +29,7 @@ jobs:
           token: ${{ secrets.WORKSPACE_CHECKOUT_TOKEN || secrets.GITHUB_TOKEN }}
           path: curaos-parent
           persist-credentials: false
-          ref: 8b9d2c0ed6ce6822d3b25763e0a3cc87ccec8de2
+          ref: d88df0d1fcb3ee30a51929cb1ff5381767a0fb48
           fetch-depth: 0
           submodules: false
 
@@ -241,7 +241,7 @@ jobs:
       TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_REMOTE_CACHE_SIGNATURE_KEY: ${{ secrets.TURBO_REMOTE_CACHE_SIGNATURE_KEY }}
-      CURAOS_PARENT_REVISION: 8b9d2c0ed6ce6822d3b25763e0a3cc87ccec8de2
+      CURAOS_PARENT_REVISION: d88df0d1fcb3ee30a51929cb1ff5381767a0fb48
       CURAOS_MEMBER_PATH: frontend/packages/api-client
       CURAOS_MEMBER_REVISION: ${{ github.event.pull_request.head.sha || github.sha }}
       CURAOS_SOURCE_SERVICES: ""
